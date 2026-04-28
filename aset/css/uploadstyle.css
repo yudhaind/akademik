@@ -1,0 +1,25 @@
+/* CSS Document */
+.progress{
+width:100%;
+background:#ddd;
+height:20px;
+border-radius:20px;
+overflow:hidden;
+margin-top:15px;
+display:none;
+}
+
+.progress-bar{
+height:100%;
+width:0%;
+background:#4CAF50;
+text-align:center;
+color:white;
+font-size:12px;
+}
+
+#notif{
+margin-top:15px;
+font-weight:bold;
+}
+

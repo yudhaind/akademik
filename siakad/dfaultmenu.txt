@@ -1,0 +1,25 @@
+MENU 
+1. Profil Sekolah
+	a. Sejarah Sekolah
+	b. Visi & Misi
+	C. Struktur Organisasi
+	d. Data Guru & Staff
+	e. Fasilitas
+	
+2. Akademik
+	a. Kurikulum
+	b. Program / Jurusan
+	c. Kalender Akademik
+	d. Extra Kurikuler
+	e. Prakerin / PKL
+	f Teaching Factory
+3. PPDB
+	a. Syarat Pedaftaran
+	b. Jadwal Pendaftaran
+	c. Biya Pendidikan
+4. Berita & Kegiatan
+	a. Artikel
+	b. Prestasi Siswa
+	c. Pengumuman
+5. Kontak
+	a. Alamat
