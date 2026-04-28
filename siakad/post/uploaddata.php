@@ -1,11 +1,13 @@
 <?php
 session_start();
 require_once('../database.php');
-$target_dir="../../aset/images/";
-$token=$_POST['token'] ?? '';
-$actionform=$_POST['actionform'] ?? '';
+$target_dir="../../aset/profilpict/";
+$tokenform=$_POST['tokenform'] ?? '';
+
+//$actionupload=$_POST['actionupload'] ?? '';
+
 if (isset($_SESSION['user']['id'])){
-	if($token===$_SESSION['token']){
+	if($tokenform===$_SESSION['tokenform']){
 		
 if(!is_dir($target_dir)){
     mkdir($target_dir,0777,true);

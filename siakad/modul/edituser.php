@@ -25,20 +25,28 @@ if ($photo==''){
 				<div>
 				</div>
 			</form>
+			<div id="notif"></div>
         </div>
 		
-		<form action="post/uploaddata.php" method="post" class="form-modern" id="uploadprofilpict">
+		<form action="post/uploaddata.php" method="post" enctype="multipart/form-data" class="form-modern" id="uploadprofilpict">
 			<div class="form-group">
 				<div class="info-item">
                 	<span>Foto Profil</span>
                	 	<p>
-                  	<input name="token" type="hidden" id="token" value="<?php 
-																		$tokenid=bin2hex(random_bytes(32));
-																		$_SESSION['token']=$tokenid;
-																		echo $_SESSION['token']; ?>"><input name="actionform" type="hidden" id="actionform" value="uploadprofilpict"><input type="file"><input type="submit" value="Unggah" class="btn-modern">
+                  	<input name="tokenform" type="hidden" id="tokenform" value="<?php 
+																		$tokenform=bin2hex(random_bytes(32));
+																		$_SESSION['tokenform']=$tokenform;
+																		echo $_SESSION['tokenform']; ?>">
+						<input name="actionform" type="hidden" id="actionform" value="uploadprofilpict">
+						<input name="file" type="file" id="file">
+						<input type="submit" value="Unggah" class="btn-modern">
                 	</p>
             	</div>
 			</div>
+			<div class="progress">
+  <div class="progress-bar">0%</div>
+</div>
+<div id="notif"></div>
 		</form>
        
      
@@ -122,7 +130,8 @@ if ($photo==''){
         </div>
 			<!-- BUTTON -->
         <div class="profile-action">
-          <input name="token" type="hidden" id="token" value="<?= $_SESSION['token']; ?>">
+          <input name="tokenform" type="hidden" id="tokenform" value="<?php 
+			echo $_SESSION['tokenform']; ?>">
           <input name="actionform" type="hidden" id="actionform" value="updateprofil">
           <input type="submit" value="Simpan" class="btn primary">
             <input type="button" class="btn" value="Batal" style="background-color: red;" onClick="closeLightbox()">
@@ -133,5 +142,63 @@ if ($photo==''){
     </div>
 </div>
 <script>
+
+$("#uploadprofilpict").submit(function(e){
+
+e.preventDefault();
+
+var formData = new FormData(this);
+
+$(".progress").show();
+//$("#notif").html("");
+
+$.ajax({
+
+url:"post/uploaddata.php",
+type:"POST",
+data:formData,
+contentType:false,
+processData:false,
+
+xhr:function(){
+
+var xhr = new window.XMLHttpRequest();
+
+xhr.upload.addEventListener("progress", function(e){
+
+if(e.lengthComputable){
+
+var percent = Math.round((e.loaded/e.total)*100);
+
+$(".progress-bar").css("width",percent+"%");
+$(".progress-bar").text(percent+"%");
+
+}
+
+});
+
+return xhr;
+
+},
+
+success:function(res){
+
+$(".progress-bar").css("width","100%");
+$(".progress-bar").text("100%");
+
+//$("#notif").html("<span style='color:green'>Upload berhasil</span>");
+
+},
+
+error:function(){
+
+$("#notif").html("<span style='color:red'>Upload gagal</span>");
+
+}
+
+});
+
+});
+
 	submitForm('#updateinfouser','senddata','#hasil',null);
 </script>

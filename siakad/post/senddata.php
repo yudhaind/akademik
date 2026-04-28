@@ -1,8 +1,8 @@
 <?php
 session_start();
 require_once('../database.php');
-$tokenpost=$_POST['token'] ?? '';
-$tokensession=$_SESSION['token'] ?? '';
+$tokenpost=$_POST['tokenform'] ?? '';
+$tokensession=$_SESSION['tokenform'] ?? '';
 if ($tokenpost===$tokensession){
 	if ($_SESSION['user']['role']=='admin') {
 		$actionform=$_POST['actionform'] ?? '';

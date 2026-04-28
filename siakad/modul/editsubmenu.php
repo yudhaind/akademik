@@ -15,7 +15,10 @@ $subcontent=$data['submenu_content'];
       <label>SubMenu Title : </label>
       <input name="judulsubmenu" type="text" id="judulsubmenu" value="<?php echo $judulsub; ?>">
       <input name="actionform" type="hidden" id="actionform" value="update_submenu">
-      <input name="token" type="hidden" id="token" value="<?php echo $_SESSION['token']; ?>">
+      <input name="tokenform" type="hidden" id="tokenform" value="<?php 
+																  $tokenform=bin2hex(random_bytes(32));
+																  $_SESSION['tokenform']=$tokenform;
+																  echo $_SESSION['tokenform']; ?>">
       <input name="idmenu" type="hidden" id="idmenu" value="<?php echo $idsub; ?>">
       <br>
       <label>Konten Submenu :</label>
