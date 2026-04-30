@@ -40,7 +40,8 @@ if ($photo==''){
 						<input name="actionform" type="hidden" id="actionform" value="uploadprofilpict">
 						<input name="file" type="file" id="file">
 						<input type="submit" value="Unggah" class="btn-modern">
-                	</p>
+               	      <input name="actionupload" type="hidden" id="actionupload" value="uploadprofilpict">
+               	 	</p>
             	</div>
 			</div>
 			<div class="progress">

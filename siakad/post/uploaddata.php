@@ -1,10 +1,16 @@
 <?php
 session_start();
-require_once('../database.php');
-$target_dir="../../aset/profilpict/";
+require_once('../database.php');\
+$actionupload=$_POST['actionupload'] ?? '';	
+if ($actionupload=='uploadprofilpict') {	
+	$target_dir="../../aset/profilpict/";
+} else {
+	$target_dir="../../aset/images";
+}
+
 $tokenform=$_POST['tokenform'] ?? '';
 
-//$actionupload=$_POST['actionupload'] ?? '';
+
 
 if (isset($_SESSION['user']['id'])){
 	if($tokenform===$_SESSION['tokenform']){
