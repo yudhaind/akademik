@@ -62,6 +62,7 @@ $totalhalaman=ceil($sqltotal/$limit);
 <?php $no=$offset+1;
 foreach ($hasil as $u){
 	$id=$u['id'];
+	$fullname=$u['full_name'];
 ?>
 <div class="user-item">  
     <div class="user-left" onClick="route('detailuser&id=<?= $id; ?>','popupcontent','1');">
@@ -80,7 +81,7 @@ foreach ($hasil as $u){
 			<a href="#" onClick="route('detailuser&id=<?= $id; ?>','popupcontent','1');">Detail</a>
             <a href="#" onClick="route('edituser&id=<?= $id; ?>','popupcontent','1');">Edit</a>
             <a href="#">Ganti Password</a>
-            <a href="#" class="danger">Hapus</a>
+            <a href="#" class="danger" onClick="hapusdata('listuser','<?= $id; ?>','<?= $fullname ?>','')">Hapus</a>
         </div>
     </div>
 </div>

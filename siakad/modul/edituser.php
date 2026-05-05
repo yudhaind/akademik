@@ -187,7 +187,10 @@ success:function(res){
 
 $(".progress-bar").css("width","100%");
 $(".progress-bar").text("100%");
-
+setTimeout(function () {
+    $(".progress").hide(); // bisa juga .hide()
+}, 5000); // 5000 ms = 5 detik
+//$(".progress").hide();
 //$("#notif").html("<span style='color:green'>Upload berhasil</span>");
 	route('profilimage&id=<?= $idprofil ?>&action=reload','profil-image','0');
 	$("#file").val("");
