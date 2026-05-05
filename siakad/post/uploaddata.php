@@ -1,7 +1,17 @@
 <?php
 session_start();
-require_once('../database.php');\
+require_once('../database.php');                                                                                               $idprofil=$_POST['idprofil'];
 $actionupload=$_POST['actionupload'] ?? '';	
+
+$sql='SELECT photo FROM `user_profiles` WHERE `user_id` = ?;';
+$db=fetchOne($sql,[$idprofil]);
+$photodb=$db['photo'];
+if ($photodb!=''){	
+	
+	unlink('../../aset/profilpict/'.$photodb);
+}
+
+
 if ($actionupload=='uploadprofilpict') {	
 	$target_dir="../../aset/profilpict/";
 } else {
@@ -44,6 +54,8 @@ if(isset($_FILES['file'])){
     if(move_uploaded_file($tmp,$target)){
 		
         echo "success";
+		$sql="UPDATE `user_profiles` SET `photo` = ? WHERE `user_profiles`.`id` = ?;";
+		query($sql,[$random_name,$idprofil]);
 		
     }else{
 

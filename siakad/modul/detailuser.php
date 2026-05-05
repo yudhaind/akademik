@@ -16,7 +16,7 @@ if ($photo==''){
     <div class="profile-card">
 
         <!-- FOTO -->
-        <div class="profile-img">
+        <div class="profile-img" id="profil-img">
             <img src="../aset/profilpict/<?= $pictname; ?>" alt="Foto User">
         </div>
 

@@ -19,8 +19,8 @@ if ($photo==''){
     <div class="profile-card">
 
         <!-- FOTO -->
-        <div class="profile-img">
-            <img src="../aset/profilpict/<?= $pictname; ?>" alt="Foto User">
+        <div class="profile-img" id="profil-image">
+           <?php include('modul/profilimage.php'); ?>
 			<form>
 				<div>
 				</div>
@@ -38,6 +38,7 @@ if ($photo==''){
 																		$_SESSION['tokenform']=$tokenform;
 																		echo $_SESSION['tokenform']; ?>">
 						<input name="actionform" type="hidden" id="actionform" value="uploadprofilpict">
+						<input name="idprofil" type="hidden" id="idprofil" value="<?= $idprofil;?>">
 						<input name="file" type="file" id="file">
 						<input type="submit" value="Unggah" class="btn-modern">
                	      <input name="actionupload" type="hidden" id="actionupload" value="uploadprofilpict">
@@ -188,7 +189,8 @@ $(".progress-bar").css("width","100%");
 $(".progress-bar").text("100%");
 
 //$("#notif").html("<span style='color:green'>Upload berhasil</span>");
-
+	route('profilimage&id=<?= $idprofil ?>&action=reload','profil-image','0');
+	$("#file").val("");
 },
 
 error:function(){
@@ -199,7 +201,6 @@ $("#notif").html("<span style='color:red'>Upload gagal</span>");
 
 });
 
-});
-
-	submitForm('#updateinfouser','senddata','#hasil',null);
+});	
+submitForm('#updateinfouser','senddata','#hasil',null);
 </script>
