@@ -80,7 +80,7 @@ foreach ($hasil as $u){
         <div class="dropdown">
 			<a href="#" onClick="route('detailuser&id=<?= $id; ?>','popupcontent','1');">Detail</a>
             <a href="#" onClick="route('edituser&id=<?= $id; ?>','popupcontent','1');">Edit</a>
-            <a href="#">Ganti Password</a>
+            <a href="#" onClick="route('changepassword&id=<?= $id; ?>','popupcontent','1')">Ganti Password</a>
             <a href="#" class="danger" onClick="hapusdata('listuser','<?= $id; ?>','<?= $fullname ?>','')">Hapus</a>
         </div>
     </div>

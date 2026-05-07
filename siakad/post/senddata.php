@@ -43,7 +43,62 @@ if ($tokenpost===$tokensession){
 			query($sql2,[$nama,$nip,$phone,$address,$gender,$tgllhr,$id]);
 			echo '<div class="ok-message" style="color:green;">Data berhasil di update</div>';
 		} else if ($actionform=='tambahuser'){
-			echo 'tambah user';
+				// 1. Pastikan request datang dari metode POST
+				if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    				// 2. Ambil data dan bersihkan dari spasi/karakter berbahaya (Sanitasi)
+    				$full_name = trim($_POST['full_name'] ?? '');
+    				$username  = trim($_POST['username'] ?? '');
+    				$password  = trim($_POST['password'] ?? '');
+    				$gender    = trim($_POST['gender'] ?? '');
+    				$birthdate = trim($_POST['birthdate'] ?? '');
+    				$role      = trim($_POST['role'] ?? '');
+    				$nip       = trim($_POST['nip'] ?? '');
+    				$email     = trim($_POST['email'] ?? '');
+    				$phone     = trim($_POST['phone'] ?? '');
+    				$status    = trim($_POST['status'] ?? '');
+    				$alamat    = trim($_POST['alamat'] ?? '');
+
+    				// 3. Array untuk menampung pesan error
+    				$errors = [];
+
+    				// 4. Validasi: Tidak boleh kosong
+    				if (empty($full_name)) $errors[] = "Nama Lengkap wajib diisi.";
+    				if (empty($username))  $errors[] = "Username wajib diisi.";
+    				if (empty($password))  $errors[] = "Password wajib diisi.";
+    				if (empty($email))     $errors[] = "Email wajib diisi.";
+
+    				// 5. Validasi: Format Email
+    				if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        				$errors[] = "Format email tidak valid.";
+    					}
+
+    				// 6. Cek jika ada error
+    				if (!empty($errors)) {
+        				// Kirim status error ke AJAX
+        				http_response_code(400); // Kode 400 = Bad Request
+        				echo implode("<br>", $errors);
+        				exit;
+    					}
+
+    // --- PROSES SIMPAN KE DATABASE (Contoh menggunakan PDO/MySQLi) ---
+    /*
+    include "../config/koneksi.php";
+    $query = $db->prepare("INSERT INTO users (...) VALUES (...)");
+    $query->execute([...]);
+    */
+
+    // Jika berhasil
+    				echo "Sukses: User baru berhasil ditambahkan.";
+
+				} else {
+    			// Jika diakses langsung tanpa POST
+    				http_response_code(403);
+    				echo "Akses ditolak.";
+					}
+					//echo 'tambah user';
+		} else if ($actionform=='changepassword') {
+			echo 'change pwd';
 		}
 	} else { echo 'Login Terlebih dahulu'; }
 } else { echo 'Token Tidak Valid'; }

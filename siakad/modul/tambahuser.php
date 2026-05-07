@@ -1,9 +1,12 @@
 <div><h1>Tambah User</h1></div>
 <hr>
 <div>
-<form action="post/senddata.php" class="form-modern" id="formtambahuser" method="post">
+<form action="post/senddata.php" class="form-modern" id="formtambahuser" method="post"><input name="tokenform" type="hidden" id="tokenform" value="<?php 
+	$tokenform=bin2hex(random_bytes(32));
+	$_SESSION['tokenform']=$tokenform;
+	echo $_SESSION['tokenform']; ?>">
 	<div class="form-group">
-		<label>Nama Lengkap :</label>
+	  <label>Nama Lengkap :</label>
 		<input name="full_name" type="text" id="fullname" placeholder="Nama Lengkap">
 	  <label>Username: </label>
 		<input name="username" type="text" id="username" placeholder="Username">
@@ -49,3 +52,60 @@
 </form>
 	<div id="hasil"></div>
 </div>
+<script>
+$(document).ready(function() {
+    $(document).on('submit', '#formtambahuser', function(e) {
+        e.preventDefault();
+
+        let isValid = true;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        $(this).find('input, select, textarea').css('border', '1px solid #ccc');
+
+        $(this).find('input, select, textarea').each(function() {
+            if ($(this).attr('type') !== 'hidden' && $(this).attr('type') !== 'submit') {
+                // PERBAIKAN: Gunakan $(this).val().trim() sebagai pengganti $.trim($(this).val())
+                let value = $(this).val() ? $(this).val().toString().trim() : "";
+                
+                if (value === "") {
+                    $(this).css('border', '2px solid red');
+                    isValid = false;
+                }
+            }
+        });
+
+        const emailInput = $('#email');
+        if (emailInput.length && !emailPattern.test(emailInput.val().trim())) {
+            emailInput.css('border', '2px solid red');
+            alert('Format email tidak valid!');
+            isValid = false;
+        }
+
+        if (isValid) {
+            const formAction = $(this).attr('action');
+            const formData = $(this).serialize();
+
+            $.ajax({
+                url: formAction,
+                type: 'POST',
+                data: formData,
+                beforeSend: function() {
+                    $('.btn-modern').val('Processing...').attr('disabled', true);
+                },
+                success: function(response) {
+                    $('#hasil').html('<div style="color: green; margin-top: 10px;">User berhasil ditambahkan!</div>');
+                    $('#formtambahuser')[0].reset();
+                },
+                error: function() {
+                    alert('Gagal mengirim data ke server.');
+                },
+                complete: function() {
+                    $('.btn-modern').val('Tambah').attr('disabled', false);
+                }
+            });
+        } else {
+            alert('Harap isi semua bidang yang bertanda merah.');
+        }
+    });
+});
+</script>
