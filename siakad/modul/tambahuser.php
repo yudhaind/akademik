@@ -53,7 +53,7 @@
 	<div id="hasil"></div>
 </div>
 <script>
-$(document).ready(function() {
+/*$(document).ready(function() {
     $(document).on('submit', '#formtambahuser', function(e) {
         e.preventDefault();
 
@@ -95,6 +95,7 @@ $(document).ready(function() {
                 success: function(response) {
                     $('#hasil').html('<div style="color: green; margin-top: 10px;">User berhasil ditambahkan!</div>');
                     $('#formtambahuser')[0].reset();
+					route('listuser','list-user','0');
                 },
                 error: function() {
                     alert('Gagal mengirim data ke server.');

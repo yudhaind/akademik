@@ -54,7 +54,7 @@ if(isset($_FILES['file'])){
     if(move_uploaded_file($tmp,$target)){
 		
         echo "success";
-		$sql="UPDATE `user_profiles` SET `photo` = ? WHERE `user_profiles`.`id` = ?;";
+		$sql="UPDATE `user_profiles` SET `photo` = ? WHERE `user_profiles`.`user_id` = ?;";
 		query($sql,[$random_name,$idprofil]);
 		
     }else{

@@ -74,6 +74,7 @@ if ($photo==''){
                     <option value="admin" <?php if ($r=='admin'){ echo 'selected';} ?> >admin</option>
                     <option value="student" <?php if ($r=='student'){ echo 'selected';} ?> >student</option>
 					  <option value="teacher" <?php if ($r=='teacher'){ echo 'selected';} ?> >teacher</option>
+					    <option value="counselor" <?php if ($r=='counselor'){ echo 'selected';} ?> >counselor</option>
 				  </select>
               </p>
             </div>

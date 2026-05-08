@@ -89,6 +89,12 @@ if ($tokenpost===$tokensession){
     */
 
     // Jika berhasil
+					$encryptedpwd=password_hash($password, PASSWORD_DEFAULT);
+					$sql="INSERT INTO `users` (`id`, `username`, `password`, `email`, `role`, `status`, `created_at`, `updated_at`) VALUES (NULL, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+					query($sql,[$username,$encryptedpwd,$email,$role,$status]);
+					$lastid=lastInsertId();
+					$sql_2="INSERT INTO `user_profiles` (`id`, `user_id`, `full_name`, `nik`, `nisn`, `nip`, `phone`, `address`, `gender`, `birth_date`, `photo`) VALUES (NULL, ?, ?, NULL, NULL, ?, ?, ?, ?, ?,'')";
+					query($sql_2,[$lastid,$full_name,$nip,$phone,$alamat,$gender,$birthdate]);
     				echo "Sukses: User baru berhasil ditambahkan.";
 
 				} else {
@@ -98,8 +104,39 @@ if ($tokenpost===$tokensession){
 					}
 					//echo 'tambah user';
 		} else if ($actionform=='changepassword') {
-			echo 'change pwd';
+			$oldpassword=$_POST['oldpassword'];
+			$newpassword=$_POST['newpassword'];
+			$r_newpassword=$_POST['repeatpassword'];
+			$iduser=$_POST['iduser'];
+			$sql="SELECT password FROM `users` WHERE `id` = ?;";
+			$hasil=fetchOne($sql,[$iduser]);
+			$passworddb=$hasil['password'];
+			if (password_verify($oldpassword,$passworddb) && ($newpassword!='') && ($r_newpassword!='') && ($newpassword==$r_newpassword) && (strlen($newpassword) >= 8)){
+				$sql_u="UPDATE `users` SET `password` = ? WHERE `users`.`id` = ?;";
+				$encryptedpwd=password_hash($newpassword, PASSWORD_DEFAULT);
+				query($sql_u,[$encryptedpwd,$iduser]);
+				echo '<div class="ok-message" style="color:green;">PASSWORD BERHASIL DI UBAH</div>';	
+			} else {
+				echo '<div class="ok-message" style="color:red">';
+					if (!password_verify($oldpassword,$passworddb)){
+						echo '<div>PASSWORD LAMA SALAH</div>';
+					}
+					if ($newpassword==''){
+						echo '<div>PASSWORD BARU TIDAK BOLEH KOSONG</div>';
+					}
+					if (strlen($newpassword)<8){
+						echo '<div>PASSWORD BARU HARUS LEBIH DARI 8 KARAKTER</div>';
+					}
+					if ($r_newpassword==''){
+						echo '<div>PASSWORD BARU YANG DI ULANG TIDAK BOLEH KOSONG</div>';
+					}
+					if ($newpassword!=$r_newpassword){
+						echo '<div>PASSWORD BARU DAN ULANGAN PASSWORD BARU TIDAK SAMA</div>';
+					}
+				echo '</div>';	
+			}
+			
 		}
 	} else { echo 'Login Terlebih dahulu'; }
-} else { echo 'Token Tidak Valid'; }
+} else { echo 'Token Tidak Valid';}
 ?>
